@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import './App.css';
 
-const socket = io('http://localhost:5000');
+const socket = io('https://collab-backend-vseb.onrender.com');
 
 const randomColor = () =>
   '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -90,7 +90,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:5000/images')
+    fetch('https://collab-backend-vseb.onrender.com/images')
       .then((res) => res.json())
       .then((data) => setImageList(data))
       .catch((err) => console.error('Image list fetch error:', err));
@@ -205,7 +205,7 @@ export default function App() {
       pushUndo([...annotations]);
       const currentImage = imageList.find(img => img.url === image);
       const updatedAnnot = annotations[selectedIndex];
-      fetch('http://localhost:5000/annotations/update', {
+      fetch('https://collab-backend-vseb.onrender.com/annotations/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -244,7 +244,7 @@ export default function App() {
       pushUndo([...annotations]);
       const currentImage = imageList.find(img => img.url === image);
       const deletedAnnot = annotations[selectedIndex];
-      fetch('http://localhost:5000/annotations/delete', {
+      fetch('https://collab-backend-vseb.onrender.com/annotations/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -266,7 +266,7 @@ export default function App() {
       const formData = new FormData();
       formData.append('image', file);
 
-      const response = await fetch('http://localhost:5000/upload', {
+      const response = await fetch('https://collab-backend-vseb.onrender.com/upload', {
         method: 'POST',
         body: formData,
       });
@@ -289,7 +289,7 @@ export default function App() {
     setAnnotations([]);
     setImage(img.url);
     try {
-      const res = await fetch(`http://localhost:5000/annotations/${img.name}`);
+      const res = await fetch(`https://collab-backend-vseb.onrender.com/annotations/${img.name}`);
       const annots = await res.json();
       setAnnotations(annots);
     } catch (err) {
